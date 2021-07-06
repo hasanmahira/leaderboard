@@ -10,4 +10,7 @@ https://medium.com/iquii/good-practices-for-high-performance-and-scalable-node-j
 https://medium.com/iquii/good-practices-for-high-performance-and-scalable-node-js-applications-part-2-3-2a68f875ce79
 https://nodejs.org/api/cluster.html
 
-
+1 - 2 - 3 
+4-10
+11-50
+51-100

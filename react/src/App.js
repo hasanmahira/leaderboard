@@ -84,6 +84,9 @@ class App extends React.Component {
                 {/* <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo" />
                 </header> */}
+                <p>{this.stateApi.apiResponse}</p>
+
+
                 <h1>Hello KendoReact!</h1>
                 <p>
                     <DropDownList
@@ -96,7 +99,6 @@ class App extends React.Component {
                     &nbsp; Selected category ID: <strong>{this.state.dropdownlistCategory}</strong>
                 </p>
 
-                <p>{this.stateApi.apiResponse}</p>
 
                 <Grid
                     data={process(products, this.state.gridDataState)}
