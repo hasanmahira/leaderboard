@@ -1,147 +1,104 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import '@progress/kendo-theme-default/dist/all.css';
-import { Calendar } from '@progress/kendo-react-dateinputs'
-import { process } from '@progress/kendo-data-query';
-import { Grid, GridColumn } from '@progress/kendo-react-grid';
-import products from './products.json';
-import { DropDownList } from '@progress/kendo-react-dropdowns';
-import categories from './categories.json';
-import { Window } from '@progress/kendo-react-dialogs';
-
+import Board from './component/Board';
+import List from './component/List';
+import { Grid } from '@progress/kendo-react-grid';
+var babala;
 
 class App extends React.Component {
     constructor(props) {
         super(props);
-        this.stateApi = { apiResponse: "" }
-    }
+        // this.state = {
+        //     apiResponse: ""
+        //     , data: [
+        //         { "playerId": 123547689, "username": "AllGoodNamesRGone", "country": "Ukraine", "money": 6436 },
+        //         { "playerId": 123574959, "username": "Definitely_not_an_athlete", "country": "Turkey", "money": 4566 },
+        //         { "playerId": 123529509, "username": "YellowSnowman", "country": "Canada", "money": 4563 },
+        //         { "playerId": 123729489, "username": "hogwartsfailure", "country": "Turkey", "money": 2657 }
+        //     ]
+        // }
+        this.state = {
+            error: null,
+            isLoaded: false,
+            items: []
+        };
 
-    callAPI() {
-        fetch("http://localhost:9000/testAPI")
-            .then(res => res.text())
-            .then(res => this.setState({ apiResponse: res }))
     }
+    // callAPI() {
+    //     fetch("http://localhost:9000/server")
+    //         .then(res => res.json())
+    //         // .then(
+    //         //     (result) => {
+    //         //         this.setState({
+    //         //             isLoaded: true,
+    //         //             items: result.items
+    //         //         });
+    //         //     })
+    //         // .then(res => console.log("res", this.state))
+    //     // .then(res => babala = res)
+    //     // .then(res => console.log("babala", babala))
+    //      .then(res => this.setState({ apiResponse : res }))
+
+    // }
 
     componentWillMount() {
-        this.callAPI();
-    }
-
-
-
-
-    state = {
-        dropdownlistCategory: null,
-        gridDataState: {
-            sort: [
-                { field: "ProductName", dir: "asc" }
-            ],
-            skip: 0,
-            take: 10
-        },
-        windowVisible: false,
-        gridClickedRow: {}
-    }
-
-    handleDropDownChange = (e) => {
-        let newDataState = { ...this.state.gridDataState }
-        if (e.target.value.CategoryID !== null) {
-            newDataState.filter = {
-                logic: 'and',
-                filters: [{ field: 'CategoryID', operator: 'eq', value: e.target.value.CategoryID }]
-            }
-            newDataState.skip = 0
-        } else {
-            newDataState.filter = []
-            newDataState.skip = 0
-        }
-        this.setState({
-            dropdownlistCategory: e.target.value.CategoryID,
-            gridDataState: newDataState
-        });
-    }
-
-    handleGridDataStateChange = (e) => {
-        this.setState({ gridDataState: e.dataState });
-    }
-
-    handleGridRowClick = (e) => {
-        this.setState({
-            windowVisible: true,
-            gridClickedRow: e.dataItem
-        });
-    }
-
-    closeWindow = (e) => {
-        this.setState({
-            windowVisible: false
-        });
-    }
-
-    render() {
-        return (
-            <div className="App">
-                {/* <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                </header> */}
-                <p>{this.stateApi.apiResponse}</p>
-
-
-                <h1>Hello KendoReact!</h1>
-                <p>
-                    <DropDownList
-                        data={categories}
-                        dataItemKey="CategoryID"
-                        textField="CategoryName"
-                        defaultItem={{ CategoryID: null, CategoryName: "Product categories" }}
-                        onChange={this.handleDropDownChange}
-                    />
-                    &nbsp; Selected category ID: <strong>{this.state.dropdownlistCategory}</strong>
-                </p>
-
-
-                <Grid
-                    data={process(products, this.state.gridDataState)}
-                    pageable={true}
-                    sortable={true}
-                    {...this.state.gridDataState}
-                    onDataStateChange={this.handleGridDataStateChange}
-                    style={{ height: "400px" }}>
-                    <GridColumn field="ProductName" title="Product Name" />
-                    <GridColumn field="UnitPrice" title="Price" format="{0:c}" />
-                    <GridColumn field="UnitsInStock" title="Units in Stock" />
-                    <GridColumn field="Discontinued" cell={checkboxColumn} />
-                </Grid>
-
-                {this.state.windowVisible &&
-                    <Window
-                        title="Product Details"
-                        onClose={this.closeWindow}
-                        height={250}>
-                        <dl>
-                            <dt>Product Name</dt>
-                            <dd>{this.state.gridClickedRow.ProductName}</dd>
-                            <dt>Product ID</dt>
-                            <dd>{this.state.gridClickedRow.ProductID}</dd>
-                            <dt>Quantity per Unit</dt>
-                            <dd>{this.state.gridClickedRow.QuantityPerUnit}</dd>
-                        </dl>
-                    </Window>
+        // this.callAPI();
+        fetch("http://localhost:9000/board")
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    this.setState({
+                        isLoaded: true,
+                        items: result.items
+                    });
+                    console.log("items", this.state.items);
+                },
+                // Not: Burada hataları yakalamak önemlidir.
+                // Bileşenimizde bug bulunmaması için, 'catch ()' bloğu yerine bulunan
+                // bu blok içinde hatalar yakalanır.
+                (error) => {
+                    this.setState({
+                        isLoaded: true,
+                        error
+                    });
                 }
-                
-            </div>
-        );
+            )
+    }
+
+    render() {
+        const { error, isLoaded, items } = this.state;
+        console.log("yasa",this.state);
+        if (error) {
+            return <div>Error: {error.message}</div>;
+        } else if (!isLoaded) {
+            return <div>Loading...</div>;
+        } else {
+            return (
+                <div className="App">
+                    <Grid data={items} />
+                    {/* {items} */}
+
+                    {/* <Board name="Mehmet" state="online" metod={ConsoleLog}></Board> */}
+
+                    <h1>Hello KendoReact!</h1>
+                    {/* <ul>
+                        {this.state.apiResponse.valueOf().map(item => (
+                            <li key={item.id}>
+                                {item.name} {item.price}
+                            </li>
+                        ))}
+                    </ul> */}
+                    {/* <List users={this.state.data} /> */}
+                </div>
+            );
+       }
     }
 }
 
-class checkboxColumn extends Component {
-    render() {
-        return (
-            <td>
-                <input type="checkbox" checked={this.props.dataItem[this.props.field]} disabled="disabled" />
-            </td>
-        );
-    }
-}
+// function ConsoleLog(data) {
+//     console.log("from APP module");
+// }
+
 
 export default App;

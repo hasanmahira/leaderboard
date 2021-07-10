@@ -1,4 +1,4 @@
-class User{
+class Player{
     constructor(){
 
     }
@@ -18,4 +18,12 @@ class User{
     getMoney(){
         return this.money
     }
+
+    fromJson(json){
+        this.playerId = json.playerId;
+        this.username = json.username;
+        this.country = json.country;
+        this.money = json.money;
+    }
 }
+

@@ -36,3 +36,35 @@
     transform: rotate(360deg);
   }
 }
+
+
+html, body, div#root, .router-div {
+  height: 100%;
+}
+
+header, main, footer {
+  width: 800px;
+}
+
+body {
+margin: 0;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 0.875em;
+color: rgb(255, 253, 248);
+  background: url('./assets/bg.jpg') no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  background-color: black;
+}
+
+a {
+color: gold;
+text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
