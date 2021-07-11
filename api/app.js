@@ -8,9 +8,7 @@ var cors = require('cors')
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 testAPIRouter = require('./routes/testAPI');
-serverRouter = require('./routes/server');
 boardRouter = require('./routes/board');
-flagRouter = require('./routes/flag');
 
 var app = express();
 
@@ -28,9 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/testAPI', testAPIRouter);
-app.use('/server', serverRouter);
 app.use('/board', boardRouter);
-app.use('/flag', flagRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

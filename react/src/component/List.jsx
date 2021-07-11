@@ -18,7 +18,6 @@ const List = ({ users,
                     </tr>
                 </thead>
                 <tbody>
-                    {/* {users.map((l, i) => <Board name={users.username} state={users[0].money} key={users[0].playerid} />)} */}
                     {users.map((l, i) => <Board key={i} {...l}
                         dominance_scale={dominance_scale}
                         dominance_precision={dominance_precision}
@@ -27,19 +26,6 @@ const List = ({ users,
                 </tbody>
             </table>
         </div>
-
-        //     <div>
-        //     {/* { changePage && 
-        //         <div>
-        //         <button onClick={(event) => changePage(event, 'previous') } disabled={start_rank < lines.length || loading}>Previous</button>
-        //         <button onClick={(event) => changePage(event, 'next')} disabled={loading}>Next</button> 
-        //         </div> } */}
-        // </div>
-
-
-        // users.map(user => {
-        //     // return <Board name={user.username} state={user.money} key={user.playerid}/>
-        // })
     )
 }
 

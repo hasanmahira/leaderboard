@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var originData = require("../public/data.json");
-
+var originData = require("../public/players.json");
 var totalMoney = 0;
 var index = 1;
 
@@ -12,46 +11,13 @@ class BoardUser {
     money;
     rank;
     dailyDif;
+    difColor;
     prize;
 
     constructor(data) {
         Object.assign(this, data);
     }
 }
-
-var list = new BoardUser(originData);
-
-list.items.sort(function (a, b) {
-    return b.money - a.money;
-});
-
-
-list.items.forEach(element => {
-    element.rank = index;
-    totalMoney += element.money;
-
-    var random = Math.floor(Math.random() * 3);
-    // if (random == 0) {
-    //     element.dailyDif = "green";
-    // } else if (random == 1) {
-    //     element.dailyDif = "yellow";
-    // } else {
-    //     element.dailyDif = "red";
-    // }
-    if (random == 0 || element.rank < 3) {
-        element.dailyDif = "↑" + Math.floor(Math.random() * 10);
-    } else if (random == 1) {
-        element.dailyDif = "↔";
-    } else if (random == 0 || element.rank < 10) {
-        element.dailyDif = "↓" + Math.floor(Math.random() * 5);
-    } else {
-        element.dailyDif = "↓" + Math.floor(Math.random() * 20);
-    }
-    index++;
-
-});
-
-prizeCalculator(totalMoney, list.items);
 
 function prizeCalculator(totalMoney, result) {
 
@@ -74,9 +40,55 @@ function prizeCalculator(totalMoney, result) {
             element.prize = remainingPrizeSecond;
         } else if (element.rank > 50 && element.rank <= 100) {
             element.prize = remainingPrizeThird;
+        } else {
+            element.prize = ":)"
         }
     });
 }
+
+var list = new BoardUser(originData);
+
+list.items.sort(function (a, b) {
+    return b.money - a.money;
+});
+
+list.items.forEach(element => {
+    element.rank = index;
+    totalMoney += element.money;
+
+    var random = Math.floor(Math.random() * 3);
+    if (random == 0 || element.rank < 3) {
+        element.dailyDif = "↑" + Math.floor(Math.random() * 10);
+        element.difColor = "Success";
+    } else if (random == 1) {
+        element.dailyDif = "↔";
+        element.difColor = "Stable";
+    } else if (random == 0 || element.rank < 10) {
+        element.dailyDif = "↓" + Math.floor(Math.random() * 5);
+        element.difColor = "Down";
+    } else {
+        element.dailyDif = "↓" + Math.floor(Math.random() * 20);
+        element.difColor = "Down";
+    }
+    index++;
+
+});
+
+prizeCalculator(totalMoney, list.items);
+
+var index = -1;
+var val = "New York Winder"
+var filteredObj = list.items.find(function(item, i){
+  if(item.username === val){
+    index = item.rank;
+    return i;
+  }
+});
+
+var filteredList = list.items.slice(index-4,index+2)
+
+list["items"] = list.items.slice(0,100);
+list["useritems"] = filteredList;
 
 router.get("/", function (req, res, next) {
     res.send(list);

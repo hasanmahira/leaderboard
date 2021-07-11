@@ -42,7 +42,7 @@ html, body, div#root, .router-div {
 }
 
 header, main, footer {
-  width: 800px;
+  width: 1000px;
 }
 
 body {
@@ -55,7 +55,7 @@ color: rgb(255, 253, 248);
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  background-color: black;
+  background-color: rgba(0, 0, 0, 0.445);
 }
 
 a {
@@ -292,6 +292,18 @@ padding: 0;
   color: gold;
 }
 
+
+.Success {
+  color: rgb(0, 168, 14);
+}
+
+.Stable {
+  color: rgba(164, 197, 15, 0.993);
+}
+
+.Down {
+  color: rgb(216, 13, 13);
+}
 
 
 
