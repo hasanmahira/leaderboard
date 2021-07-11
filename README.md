@@ -1,4 +1,4 @@
-# leaderboard
+# LeaderBoard
 
 ##Case
 It is the Leaderboard project designed for the weekly reward system of players who play a game. Players earn money every week based on their in-game activity. 2% of the total winnings are collected in the prize pool and the top 100 players get their share of the money in this pool at the end of the week.
