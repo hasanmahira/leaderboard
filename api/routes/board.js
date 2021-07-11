@@ -5,17 +5,18 @@ var totalMoney = 0;
 var index = 1;
 
 class BoardUser {
-    playerId;
-    username;
-    country;
-    money;
-    rank;
-    dailyDif;
-    difColor;
-    prize;
 
     constructor(data) {
         Object.assign(this, data);
+
+        this.playerId = data.playerId;
+        this.username = data.username;
+        this.country = data.country;
+        this.money = data.money;
+        this.rank = data.rank;
+        this.dailyDif = data.dailyDif;
+        this.difColor = data.difColor;
+        this.prize = data.prize;
     }
 }
 
@@ -78,16 +79,16 @@ prizeCalculator(totalMoney, list.items);
 
 var index = -1;
 var val = "New York Winder"
-var filteredObj = list.items.find(function(item, i){
-  if(item.username === val){
-    index = item.rank;
-    return i;
-  }
+var filteredObj = list.items.find(function (item, i) {
+    if (item.username === val) {
+        index = item.rank;
+        return i;
+    }
 });
 
-var filteredList = list.items.slice(index-4,index+2)
+var filteredList = list.items.slice(index - 4, index + 2)
 
-list["items"] = list.items.slice(0,100);
+list["items"] = list.items.slice(0, 100);
 list["useritems"] = filteredList;
 
 router.get("/", function (req, res, next) {
