@@ -14,10 +14,8 @@ https://mehmetseven.net/nginx-ve-nodejs-ile-load-balancing/
 ##Project
 
 The project is temporarily open to access at the link below.
-http://ec2-18-189-54-164.us-east-2.compute.amazonaws.com:3000/
+https://leaderboard-zeta.vercel.app/
 
 
-##TODO List:
-
-MongoDB connection 
+##TODO for me:
 LoadBalancing
